@@ -1,0 +1,24 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholasgriffen/blog-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nicholasgriffen/blog-server/issues"
+  },
+  "homepage": "https://github.com/nicholasgriffen/blog-server#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.4"
+  }
+}
