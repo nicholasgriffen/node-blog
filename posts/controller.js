@@ -40,7 +40,6 @@ module.exports = {
             }))
     },
     getOne(req,  res, next) {
-        debugger
         return model.getOne(req.params.id)
             .then(record => {
                 return res.status(202).json(record)
