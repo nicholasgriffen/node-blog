@@ -3,17 +3,16 @@ const schemas = require('./schema')
 const model = require('./model')
 
 module.exports = {
-    validate(req, res, next) {
-        let schema 
-        let post
-        if (req.method === 'PUT' || req.method === 'DELETE') {
-            schema = schemas.update
-            post = {id: req.params.id, content: req.body.content} 
-        } else {
-            schema = schemas.create
-            post = {content: req.body.content} 
-        }
-        return Joi.validate(post, schema, (err, value) => {
+    validateID(req, res, next) {
+        let schema = schemas.ID
+        return Joi.validate(req.params.id, schema.required(), (err, value) => {
+            if (err) return next({status: 422, caught: err})
+            return next()
+        })
+    },
+    validateContent(req, res, next) {
+        let schema = schemas.content
+        return Joi.validate(req.body, schema.required(), (err, value) => {
             if (err) return next({status: 422, caught: err})
             return next()
         })
