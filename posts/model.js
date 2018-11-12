@@ -1,14 +1,20 @@
 const fs = require('fs') 
 const uuid = require('uuid')
 
-const db = './backup.data'
-const schema = /id: (.*), content: (.*)}/
+const db = './posts.json'   
 
 module.exports = {
     create(body) {
         let created = { id: uuid(), content: body.content }
         try {
-            fs.appendFileSync(db, `{id: "${created.id}", content: ${created.content}};`, 'utf8')
+            // read json
+            let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
+            // if posts is not an Array something broke, make it one
+            if (!Array.isArray(posts)) posts = [] 
+            // push new obj into json 
+            posts.push(created)
+            // write json  
+            fs.writeFileSync(db, JSON.stringifiy(posts), 'utf8')
             return Promise.resolve(created)
         }
         catch(error) {
