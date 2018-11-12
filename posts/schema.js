@@ -1,9 +1,9 @@
 const Joi = require('joi')
 module.exports = {
     content: Joi.object().keys({
-        content: Joi.string().guid().required()
+        content: Joi.string().required()
     }),
     ID: Joi.object().keys({
-        id: Joi.string().alphanum().required(),
+        id: Joi.string().guid().required(),
     }),
 }
