@@ -23,22 +23,18 @@ module.exports = {
     },
     getAll() {
         try {
-            let posts = fs.readFileSync(db, 'utf8').split(';')
-            return Promise.resolve(posts.map(post => {
-                let [, id, content ] = schema.exec(post)
-                return { id, content }
-            }))
+            let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
+            return Promise.resolve(posts)
         }
         catch(error) {
             return Promise.reject(error)
         }
     },
-    getOne(param) {
+    getOne(id) {
         try {
-            let posts = fs.readFileSync(db, 'utf8').split(';')
-            let position = posts.findIndex('{id: '+ param)
-            let [, id, content ] = schema.exec(posts[position])
-            return Promise.resolve({ id, content })
+            let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
+            let post = posts.find(post => post.id === id)
+            return Promise.resolve(post)
         }
         catch(error) {
             return Promise.reject(error)
@@ -47,12 +43,11 @@ module.exports = {
     update(id, body) {
         try {
             let updated = { id, content: body.content }
-            let posts = fs.readFileSync(db, 'utf8').split(';')
-            let position = posts.findIndex(`{id: ${id}`)
+            let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
+            let position = posts.findIndex(post => post.id === id)
 			
-            posts.splice(position, 1)
-            posts.push(`{id: "${updated.id}", content: ${updated.content}}`)
-            fs.writeFileSync(db, posts.join(';'), 'utf8')
+            posts.splice(position, 1, updated)
+            fs.writeFileSync(db, JSON.stringifiy(posts), 'utf8')
             return Promise.resolve(updated)
         }
         catch(error) {
@@ -61,10 +56,10 @@ module.exports = {
     },
     delete(id) {
         try {
-            let backup = fs.readFileSync(db, 'utf8').split(';')
-            let position = backup.findIndex(`{id: ${id}`)
-            backup.splice(position, 1)
-            fs.writeFileSync(db, backup.join(';'), 'utf8')
+            let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
+            let position = posts.findIndex(post => post.id === id)
+            posts.splice(position, 1)
+            fs.writeFileSync(db, JSON.stringifiy(posts), 'utf8')
             return Promise.resolve(id)
         }
         catch(error) {
