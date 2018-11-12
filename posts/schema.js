@@ -3,7 +3,7 @@ module.exports = {
     content: Joi.object().keys({
         content: Joi.string().required()
     }),
-    id: Joi.object().keys({
+    ID: Joi.object().keys({
         id: Joi.string().alphanum().required(),
     }),
 }

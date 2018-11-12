@@ -5,7 +5,7 @@ const model = require('./model')
 module.exports = {
     validateID(req, res, next) {
         let schema = schemas.ID
-        return Joi.validate(req.params.id, schema.required(), (err, value) => {
+        return Joi.validate({id: req.params.id}, schema.required(), (err, value) => {
             if (err) return next({status: 422, caught: err})
             return next()
         })

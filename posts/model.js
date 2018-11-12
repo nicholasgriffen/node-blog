@@ -56,6 +56,7 @@ module.exports = {
     },
     delete(id) {
         try {
+            console.log(id)
             let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
             let position = posts.findIndex(post => post.id === id)
             posts.splice(position, 1)
