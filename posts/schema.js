@@ -5,5 +5,5 @@ module.exports = {
     }),
     ID: Joi.object().keys({
         id: Joi.string().guid().required(),
-    }),
+    })
 }
