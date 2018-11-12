@@ -14,7 +14,7 @@ module.exports = {
             // push new obj into json 
             posts.push(created)
             // write json  
-            fs.writeFileSync(db, JSON.stringifiy(posts), 'utf8')
+            fs.writeFileSync(db, JSON.stringify(posts), 'utf8')
             return Promise.resolve(created)
         }
         catch(error) {
@@ -47,7 +47,7 @@ module.exports = {
             let position = posts.findIndex(post => post.id === id)
 			
             posts.splice(position, 1, updated)
-            fs.writeFileSync(db, JSON.stringifiy(posts), 'utf8')
+            fs.writeFileSync(db, JSON.stringify(posts), 'utf8')
             return Promise.resolve(updated)
         }
         catch(error) {
@@ -59,7 +59,7 @@ module.exports = {
             let posts = JSON.parse(fs.readFileSync(db, 'utf8'))
             let position = posts.findIndex(post => post.id === id)
             posts.splice(position, 1)
-            fs.writeFileSync(db, JSON.stringifiy(posts), 'utf8')
+            fs.writeFileSync(db, JSON.stringify(posts), 'utf8')
             return Promise.resolve(id)
         }
         catch(error) {
